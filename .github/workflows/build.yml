@@ -1,0 +1,133 @@
+name: Build App
+
+permissions:
+  pull-requests: write
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  # Run on every push to a pull request
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+# Cancel in-progress jobs when a new push is made to the same PR
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Runs before the build starts
+  # Cannot find a way to do this yet without compromising security
+  before-build-comment:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Comment PR with build status
+        continue-on-error: true
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          message: |
+            ### Build is in progress... 🚀
+            Currently building for this pull request!
+          comment-tag: build
+
+  # Runs the build
+  build:
+    needs: before-build-comment
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest, macos-13, windows-latest]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Use Stock Electron (Ubuntu ARM only)
+        if: matrix.os == 'ubuntu-24.04-arm'
+        run: bun run script:use-stock-electron
+
+      - name: Install Build Dependencies (Ubuntu only)
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-24.04-arm'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y flatpak-builder elfutils dpkg fakeroot
+
+      - name: Install Additional Build Dependencies (Ubuntu ARM only)
+        if: matrix.os == 'ubuntu-24.04-arm'
+        run: |
+          sudo apt-get install -y ruby ruby-dev
+          sudo gem install --no-document fpm
+
+      - name: Setup Flatpak (Ubuntu only)
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-24.04-arm'
+        run: |
+          flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+      - name: Install Dependencies
+        run: bun install --development --frozen-lockfile
+        env:
+          SHARP_IGNORE_GLOBAL_LIBVIPS: 1
+
+      - name: Build for Linux
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-24.04-arm'
+        run: bun run build:linux -p never
+        env:
+          USE_SYSTEM_FPM: ${{ matrix.os == 'ubuntu-24.04-arm' }}
+
+      - name: Build for macOS
+        if: matrix.os == 'macos-latest' || matrix.os == 'macos-13'
+        run: bun run build:mac -p never
+
+      - name: Build for Windows
+        if: matrix.os == 'windows-latest'
+        run: bun run build:win -p never
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.os }}
+          path: |
+            dist/*.exe
+            dist/*.zip
+            dist/*.dmg
+            dist/*.AppImage
+            dist/*.deb
+            dist/*.rpm
+            dist/*.tar.gz
+            dist/*.yml
+            dist/*.blockmap
+            dist/*.flatpak
+
+  # Runs after all builds complete
+  after-build-comment:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Comment PR with artifact links
+        uses: thollander/actions-comment-pull-request@v3
+        continue-on-error: true
+        with:
+          message: |
+            ### Build artifacts for all platforms are ready! 🚀
+            Download the artifacts from:
+            - [Linux](https://nightly.link/${{ github.repository }}/actions/runs/${{ github.run_id }}/ubuntu-latest.zip)
+            - [Linux (arm64)](https://nightly.link/${{ github.repository }}/actions/runs/${{ github.run_id }}/ubuntu-24.04-arm.zip)
+            - [macOS](https://nightly.link/${{ github.repository }}/actions/runs/${{ github.run_id }}/macos-latest.zip)
+            - [macOS (Intel)](https://nightly.link/${{ github.repository }}/actions/runs/${{ github.run_id }}/macos-13.zip)
+            - [Windows](https://nightly.link/${{ github.repository }}/actions/runs/${{ github.run_id }}/windows-latest.zip)
+
+            _(execution **${{ github.run_id }}** / attempt **${{ github.run_attempt }}**)_
+          comment-tag: build

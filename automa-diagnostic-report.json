@@ -1,0 +1,110 @@
+{
+  "timestamp": "2025-08-28T17:20:58.862Z",
+  "extensionId": "fnffdnijloammfoopdipfghmaekdddhe",
+  "extensionName": "Automa",
+  "summary": {
+    "totalIssues": 5,
+    "errors": 5,
+    "warnings": 0,
+    "info": 8
+  },
+  "issues": [
+    {
+      "timestamp": "2025-08-28T17:20:58.855Z",
+      "level": "ERROR",
+      "message": "扩展目录不存在: /Users/leven/Library/Application Support/Flow/Profiles/main/Extensions/fnffdnijloammfoopdipfghmaekdddhe",
+      "data": {
+        "errno": -2,
+        "code": "ENOENT",
+        "syscall": "stat",
+        "path": "/Users/leven/Library/Application Support/Flow/Profiles/main/Extensions/fnffdnijloammfoopdipfghmaekdddhe"
+      }
+    },
+    {
+      "timestamp": "2025-08-28T17:20:58.857Z",
+      "level": "ERROR",
+      "message": "读取manifest.json失败",
+      "data": {
+        "errno": -2,
+        "code": "ENOENT",
+        "syscall": "open",
+        "path": "/Users/leven/Library/Application Support/Flow/Profiles/main/Extensions/fnffdnijloammfoopdipfghmaekdddhe/manifest.json"
+      }
+    },
+    {
+      "timestamp": "2025-08-28T17:20:58.858Z",
+      "level": "ERROR",
+      "message": "权限兼容性分数过低: 30/100",
+      "data": null
+    },
+    {
+      "timestamp": "2025-08-28T17:20:58.858Z",
+      "level": "ERROR",
+      "message": "Service Worker检查失败",
+      "data": {
+        "errno": -2,
+        "code": "ENOENT",
+        "syscall": "stat",
+        "path": "/Users/leven/Library/Application Support/Flow/Profiles/main/Extensions/fnffdnijloammfoopdipfghmaekdddhe/background.bundle.js"
+      }
+    },
+    {
+      "timestamp": "2025-08-28T17:20:58.860Z",
+      "level": "ERROR",
+      "message": "Popup文件不存在或无法访问",
+      "data": {
+        "errno": -2,
+        "code": "ENOENT",
+        "syscall": "access",
+        "path": "/Users/leven/Library/Application Support/Flow/Profiles/main/Extensions/fnffdnijloammfoopdipfghmaekdddhe/popup.html"
+      }
+    }
+  ],
+  "recommendations": [
+    {
+      "type": "permission",
+      "priority": "high",
+      "title": "权限兼容性问题",
+      "description": "Automa扩展使用了Flow Browser不完全支持的权限",
+      "actions": [
+        "联系Automa开发者，请求提供Flow Browser兼容版本",
+        "考虑使用其他自动化扩展替代",
+        "在Chrome浏览器中测试扩展功能"
+      ]
+    },
+    {
+      "type": "service_worker",
+      "priority": "critical",
+      "title": "Service Worker问题",
+      "description": "Service Worker启动失败，这会导致扩展无法正常工作",
+      "actions": [
+        "重新安装Automa扩展",
+        "检查扩展文件是否完整",
+        "尝试使用开发者模式加载扩展"
+      ]
+    },
+    {
+      "type": "popup",
+      "priority": "medium",
+      "title": "Popup界面问题",
+      "description": "扩展的弹出界面可能无法正常显示",
+      "actions": [
+        "检查扩展的popup.html文件",
+        "尝试重新加载扩展",
+        "使用扩展的快捷键而不是点击图标"
+      ]
+    },
+    {
+      "type": "general",
+      "priority": "low",
+      "title": "通用建议",
+      "description": "提高扩展兼容性的建议",
+      "actions": [
+        "保持Flow Browser和扩展都更新到最新版本",
+        "在扩展管理页面中启用开发者模式",
+        "查看Flow Browser的扩展兼容性文档",
+        "向Flow Browser团队报告兼容性问题"
+      ]
+    }
+  ]
+}

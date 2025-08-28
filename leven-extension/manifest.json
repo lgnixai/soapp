@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "Leven Extension",
+  "version": "1.0.0",
+  "description": "A simple test extension for Flow Browser",
+  "permissions": [
+    "activeTab"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Leven Extension"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}

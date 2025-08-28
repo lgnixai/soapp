@@ -1,0 +1,11 @@
+[install]
+# 设置代理
+[install.registry]
+url = "https://registry.npmjs.org/"
+
+[install.registry.proxy]
+http = "http://127.0.0.1:15236"
+https = "http://127.0.0.1:15236"
+
+# 或者使用环境变量方式
+# 可以通过设置 HTTP_PROXY 和 HTTPS_PROXY 环境变量

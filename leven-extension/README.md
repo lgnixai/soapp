@@ -14,10 +14,11 @@
 ## 🚀 安装步骤
 
 ### 1. 生成图标
+
 1. 在浏览器中打开 `generate-icons.html`
 2. 点击下载按钮生成三个尺寸的图标：
    - `icon16.png` (16x16)
-   - `icon48.png` (48x48) 
+   - `icon48.png` (48x48)
    - `icon128.png` (128x128)
 3. 将下载的图标文件放到 `leven-extension` 目录中
 
@@ -55,17 +56,20 @@ leven-extension/
 ## 🔧 技术细节
 
 ### Manifest V3
+
 - 使用最新的Manifest V3规范
 - 最小权限要求：仅需要 `activeTab`
 - 无后台脚本，纯前端实现
 
 ### 兼容性
+
 - ✅ Flow Browser
 - ✅ Chrome浏览器
 - ✅ Edge浏览器
 - ✅ 其他基于Chromium的浏览器
 
 ### 测试功能
+
 - Chrome Runtime API可用性检测
 - 扩展清单加载测试
 - 用户交互响应测试
@@ -74,16 +78,19 @@ leven-extension/
 ## 🐛 故障排除
 
 ### 扩展无法加载
+
 1. 确保所有文件都在正确位置
 2. 检查manifest.json语法是否正确
 3. 确保图标文件存在且命名正确
 
 ### 弹窗无法显示
+
 1. 检查浏览器控制台是否有错误
 2. 确保popup.html和popup.js文件完整
 3. 尝试重新加载扩展
 
 ### 图标不显示
+
 1. 确保图标文件格式为PNG
 2. 检查图标文件尺寸是否正确
 3. 重新生成图标文件

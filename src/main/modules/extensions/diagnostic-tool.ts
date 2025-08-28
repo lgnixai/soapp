@@ -16,10 +16,10 @@ export class ExtensionDiagnosticTool {
     extensionId: string;
     name: string;
     version: string;
-    status: 'healthy' | 'warning' | 'error' | 'critical';
+    status: "healthy" | "warning" | "error" | "critical";
     issues: Array<{
-      type: 'permission' | 'service_worker' | 'popup' | 'manifest' | 'runtime';
-      severity: 'low' | 'medium' | 'high' | 'critical';
+      type: "permission" | "service_worker" | "popup" | "manifest" | "runtime";
+      severity: "low" | "medium" | "high" | "critical";
       message: string;
       suggestion?: string;
     }>;
@@ -28,12 +28,12 @@ export class ExtensionDiagnosticTool {
   } {
     const manifest = extension.manifest;
     const extensionId = extension.id;
-    const name = manifest.name || 'Unknown Extension';
-    const version = manifest.version || 'Unknown Version';
-    
+    const name = manifest.name || "Unknown Extension";
+    const version = manifest.version || "Unknown Version";
+
     const issues: Array<{
-      type: 'permission' | 'service_worker' | 'popup' | 'manifest' | 'runtime';
-      severity: 'low' | 'medium' | 'high' | 'critical';
+      type: "permission" | "service_worker" | "popup" | "manifest" | "runtime";
+      severity: "low" | "medium" | "high" | "critical";
       message: string;
       suggestion?: string;
     }> = [];
@@ -42,10 +42,10 @@ export class ExtensionDiagnosticTool {
     const permissionReport = ExtensionPermissionManager.generateCompatibilityReport(extension);
     if (permissionReport.unsupportedPermissions.length > 0) {
       issues.push({
-        type: 'permission',
-        severity: permissionReport.unsupportedPermissions.includes('debugger') ? 'critical' : 'high',
-        message: `Unsupported permissions: ${permissionReport.unsupportedPermissions.join(', ')}`,
-        suggestion: 'Consider using alternative permissions or contact extension developer'
+        type: "permission",
+        severity: permissionReport.unsupportedPermissions.includes("debugger") ? "critical" : "high",
+        message: `Unsupported permissions: ${permissionReport.unsupportedPermissions.join(", ")}`,
+        suggestion: "Consider using alternative permissions or contact extension developer"
       });
     }
 
@@ -58,10 +58,10 @@ export class ExtensionDiagnosticTool {
         debugPrint("EXTENSION_DIAGNOSTIC", `Service worker path: ${serviceWorkerPath}`);
       } catch (error) {
         issues.push({
-          type: 'service_worker',
-          severity: 'critical',
-          message: 'Service worker registration failed',
-          suggestion: 'Check service worker file path and syntax'
+          type: "service_worker",
+          severity: "critical",
+          message: "Service worker registration failed",
+          suggestion: "Check service worker file path and syntax"
         });
       }
     }
@@ -73,10 +73,10 @@ export class ExtensionDiagnosticTool {
         debugPrint("EXTENSION_DIAGNOSTIC", `Popup path: ${popupPath}`);
       } catch (error) {
         issues.push({
-          type: 'popup',
-          severity: 'medium',
-          message: 'Popup loading failed',
-          suggestion: 'Check popup HTML file path and syntax'
+          type: "popup",
+          severity: "medium",
+          message: "Popup loading failed",
+          suggestion: "Check popup HTML file path and syntax"
         });
       }
     }
@@ -84,10 +84,10 @@ export class ExtensionDiagnosticTool {
     // 4. 检查Manifest版本
     if (manifest.manifest_version !== 3) {
       issues.push({
-        type: 'manifest',
-        severity: 'high',
+        type: "manifest",
+        severity: "high",
         message: `Manifest version ${manifest.manifest_version} is not fully supported`,
-        suggestion: 'Update to Manifest V3 for better compatibility'
+        suggestion: "Update to Manifest V3 for better compatibility"
       });
     }
 
@@ -95,13 +95,13 @@ export class ExtensionDiagnosticTool {
     // 这里可以添加运行时错误检测逻辑
 
     // 确定整体状态
-    let status: 'healthy' | 'warning' | 'error' | 'critical' = 'healthy';
-    if (issues.some(issue => issue.severity === 'critical')) {
-      status = 'critical';
-    } else if (issues.some(issue => issue.severity === 'high')) {
-      status = 'error';
-    } else if (issues.some(issue => issue.severity === 'medium')) {
-      status = 'warning';
+    let status: "healthy" | "warning" | "error" | "critical" = "healthy";
+    if (issues.some((issue) => issue.severity === "critical")) {
+      status = "critical";
+    } else if (issues.some((issue) => issue.severity === "high")) {
+      status = "error";
+    } else if (issues.some((issue) => issue.severity === "medium")) {
+      status = "warning";
     }
 
     // 生成建议
@@ -126,8 +126,8 @@ export class ExtensionDiagnosticTool {
    */
   private static generateRecommendations(
     issues: Array<{
-      type: 'permission' | 'service_worker' | 'popup' | 'manifest' | 'runtime';
-      severity: 'low' | 'medium' | 'high' | 'critical';
+      type: "permission" | "service_worker" | "popup" | "manifest" | "runtime";
+      severity: "low" | "medium" | "high" | "critical";
       message: string;
       suggestion?: string;
     }>,
@@ -144,14 +144,14 @@ export class ExtensionDiagnosticTool {
 
     // 权限相关建议
     if (permissionReport.score < 50) {
-      recommendations.push('This extension has significant compatibility issues. Consider finding an alternative.');
+      recommendations.push("This extension has significant compatibility issues. Consider finding an alternative.");
     } else if (permissionReport.score < 80) {
-      recommendations.push('Some features may not work as expected due to permission limitations.');
+      recommendations.push("Some features may not work as expected due to permission limitations.");
     }
 
     // 通用建议
-    recommendations.push('Keep the extension updated to the latest version for better compatibility.');
-    recommendations.push('Report compatibility issues to the extension developer.');
+    recommendations.push("Keep the extension updated to the latest version for better compatibility.");
+    recommendations.push("Report compatibility issues to the extension developer.");
 
     return [...new Set(recommendations)]; // 去重
   }
@@ -163,7 +163,7 @@ export class ExtensionDiagnosticTool {
    */
   public static canRunInFlowBrowser(extension: Extension): boolean {
     const diagnostic = this.diagnoseExtension(extension);
-    return diagnostic.status !== 'critical' && diagnostic.compatibilityScore > 30;
+    return diagnostic.status !== "critical" && diagnostic.compatibilityScore > 30;
   }
 
   /**
@@ -189,7 +189,7 @@ export class ExtensionDiagnosticTool {
     };
   } {
     const manifest = extension.manifest;
-    
+
     return {
       basic: this.diagnoseExtension(extension),
       permissions: ExtensionPermissionManager.generateCompatibilityReport(extension),
@@ -204,7 +204,7 @@ export class ExtensionDiagnosticTool {
       files: {
         serviceWorker: manifest.background?.service_worker,
         popup: manifest.action?.default_popup,
-        contentScripts: manifest.content_scripts?.map(cs => cs.js).flat() || []
+        contentScripts: manifest.content_scripts?.map((cs) => cs.js).flat() || []
       }
     };
   }
@@ -226,21 +226,21 @@ export class ExtensionDiagnosticTool {
     extensions: Array<ReturnType<typeof this.diagnoseExtension>>;
     recommendations: string[];
   } {
-    const extensionDiagnostics = extensions.map(ext => this.diagnoseExtension(extension));
-    
+    const extensionDiagnostics = extensions.map((ext) => this.diagnoseExtension(extension));
+
     const summary = {
       total: extensions.length,
-      healthy: extensionDiagnostics.filter(d => d.status === 'healthy').length,
-      warning: extensionDiagnostics.filter(d => d.status === 'warning').length,
-      error: extensionDiagnostics.filter(d => d.status === 'error').length,
-      critical: extensionDiagnostics.filter(d => d.status === 'critical').length,
+      healthy: extensionDiagnostics.filter((d) => d.status === "healthy").length,
+      warning: extensionDiagnostics.filter((d) => d.status === "warning").length,
+      error: extensionDiagnostics.filter((d) => d.status === "error").length,
+      critical: extensionDiagnostics.filter((d) => d.status === "critical").length,
       averageCompatibilityScore: Math.round(
         extensionDiagnostics.reduce((sum, d) => sum + d.compatibilityScore, 0) / extensions.length
       )
     };
 
     const allRecommendations = extensionDiagnostics
-      .flatMap(d => d.recommendations)
+      .flatMap((d) => d.recommendations)
       .filter((rec, index, arr) => arr.indexOf(rec) === index); // 去重
 
     return {

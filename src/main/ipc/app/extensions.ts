@@ -192,7 +192,10 @@ ipcMain.handle(
 // Developer mode APIs
 ipcMain.handle(
   "extensions:load-unpacked-extension",
-  async (event: IpcMainInvokeEvent, extensionPath: string): Promise<{ success: boolean; extensionId?: string; error?: string }> => {
+  async (
+    event: IpcMainInvokeEvent,
+    extensionPath: string
+  ): Promise<{ success: boolean; extensionId?: string; error?: string }> => {
     if (!browser) return { success: false, error: "Browser not initialized" };
 
     const profileId = await getCurrentProfileIdFromWebContents(event.sender);
@@ -242,7 +245,11 @@ ipcMain.handle(
 
 ipcMain.handle(
   "extensions:update-unpacked-extension",
-  async (event: IpcMainInvokeEvent, extensionId: string, newSourcePath?: string): Promise<{ success: boolean; error?: string }> => {
+  async (
+    event: IpcMainInvokeEvent,
+    extensionId: string,
+    newSourcePath?: string
+  ): Promise<{ success: boolean; error?: string }> => {
     if (!browser) return { success: false, error: "Browser not initialized" };
 
     const profileId = await getCurrentProfileIdFromWebContents(event.sender);

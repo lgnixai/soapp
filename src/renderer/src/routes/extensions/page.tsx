@@ -97,7 +97,7 @@ function ExtensionsPage() {
 
             <Card className="border-border">
               <CardContent>
-                <DeveloperMode 
+                <DeveloperMode
                   isDeveloperMode={isDeveloperMode}
                   onDeveloperModeChange={setIsDeveloperMode}
                   onExtensionLoaded={handleExtensionLoaded}
@@ -143,13 +143,13 @@ function ExtensionsPage() {
             </Card>
           </>
         ) : (
-          <ExtensionDetails 
-            extension={selectedExtension} 
+          <ExtensionDetails
+            extension={selectedExtension}
             isDeveloperMode={isDeveloperMode}
             isProcessing={isProcessing}
             setExtensionEnabled={setExtensionEnabled}
             setExtensionPinned={setExtensionPinned}
-            onBack={handleBack} 
+            onBack={handleBack}
           />
         )}
       </motion.div>
@@ -169,4 +169,3 @@ function App() {
 }
 
 export default App;
-

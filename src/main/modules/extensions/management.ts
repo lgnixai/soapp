@@ -491,7 +491,7 @@ export class ExtensionManager extends TypedEventEmitter<{
 
       // Generate extension ID based on path (for unpacked extensions)
       const extensionId = this.generateUnpackedExtensionId(extensionPath);
-      
+
       // Check if extension is already loaded
       const existingExtension = this.getExtensionDataFromCache(extensionId);
       if (existingExtension) {
@@ -501,7 +501,7 @@ export class ExtensionManager extends TypedEventEmitter<{
       // Copy extension to unpacked directory
       const unpackedPath = this.getExtensionsPath("unpacked");
       const targetPath = path.join(unpackedPath, extensionId);
-      
+
       await fs.mkdir(unpackedPath, { recursive: true });
       await this.copyDirectory(extensionPath, targetPath);
 
@@ -531,9 +531,9 @@ export class ExtensionManager extends TypedEventEmitter<{
    */
   private generateUnpackedExtensionId(extensionPath: string): string {
     // Use a hash of the absolute path to generate a unique ID
-    const crypto = require('crypto');
+    const crypto = require("crypto");
     const absolutePath = path.resolve(extensionPath);
-    const hash = crypto.createHash('sha256').update(absolutePath).digest('hex');
+    const hash = crypto.createHash("sha256").update(absolutePath).digest("hex");
     return `unpacked_${hash.substring(0, 16)}`;
   }
 
@@ -579,7 +579,7 @@ export class ExtensionManager extends TypedEventEmitter<{
       // Remove the directory
       const unpackedPath = this.getExtensionsPath("unpacked");
       const extensionPath = path.join(unpackedPath, extensionId);
-      
+
       if (await isDirectory(extensionPath)) {
         await fs.rm(extensionPath, { recursive: true, force: true });
       }
@@ -610,7 +610,7 @@ export class ExtensionManager extends TypedEventEmitter<{
       // Remove the old directory
       const unpackedPath = this.getExtensionsPath("unpacked");
       const oldExtensionPath = path.join(unpackedPath, extensionId);
-      
+
       if (await isDirectory(oldExtensionPath)) {
         await fs.rm(oldExtensionPath, { recursive: true, force: true });
       }

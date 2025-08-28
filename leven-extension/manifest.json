@@ -3,9 +3,7 @@
   "name": "Leven Extension",
   "version": "1.0.0",
   "description": "A simple test extension for Flow Browser",
-  "permissions": [
-    "activeTab"
-  ],
+  "permissions": ["activeTab"],
   "action": {
     "default_popup": "popup.html",
     "default_title": "Leven Extension"

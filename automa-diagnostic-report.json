@@ -77,22 +77,14 @@
       "priority": "critical",
       "title": "Service Worker问题",
       "description": "Service Worker启动失败，这会导致扩展无法正常工作",
-      "actions": [
-        "重新安装Automa扩展",
-        "检查扩展文件是否完整",
-        "尝试使用开发者模式加载扩展"
-      ]
+      "actions": ["重新安装Automa扩展", "检查扩展文件是否完整", "尝试使用开发者模式加载扩展"]
     },
     {
       "type": "popup",
       "priority": "medium",
       "title": "Popup界面问题",
       "description": "扩展的弹出界面可能无法正常显示",
-      "actions": [
-        "检查扩展的popup.html文件",
-        "尝试重新加载扩展",
-        "使用扩展的快捷键而不是点击图标"
-      ]
+      "actions": ["检查扩展的popup.html文件", "尝试重新加载扩展", "使用扩展的快捷键而不是点击图标"]
     },
     {
       "type": "general",

@@ -41,5 +41,8 @@ export interface FlowExtensionsAPI {
   /**
    * Update an unpacked extension (Developer mode)
    */
-  updateUnpackedExtension: (extensionId: string, newSourcePath?: string) => Promise<{ success: boolean; error?: string }>;
+  updateUnpackedExtension: (
+    extensionId: string,
+    newSourcePath?: string
+  ) => Promise<{ success: boolean; error?: string }>;
 }

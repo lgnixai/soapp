@@ -53,13 +53,13 @@ export class ExtensionPermissionManager {
   // 权限映射 - 将不支持的权限映射到支持的权限
   private static readonly PERMISSION_MAPPINGS = {
     // 将一些高级权限映射到基础权限
-    "proxy": ["webRequest"],
-    "debugger": ["scripting"],
-    "webNavigation": ["tabs"],
-    "cookies": ["storage"],
-    "downloads": ["storage"],
-    "contextMenus": ["activeTab"],
-    "notifications": ["storage"]
+    proxy: ["webRequest"],
+    debugger: ["scripting"],
+    webNavigation: ["tabs"],
+    cookies: ["storage"],
+    downloads: ["storage"],
+    contextMenus: ["activeTab"],
+    notifications: ["storage"]
   };
 
   /**
@@ -76,22 +76,22 @@ export class ExtensionPermissionManager {
     const manifest = extension.manifest;
     const permissions = manifest.permissions || [];
     const hostPermissions = manifest.host_permissions || [];
-    
+
     const warnings: string[] = [];
     const errors: string[] = [];
     const mappedPermissions: string[] = [];
 
     // 检查每个权限
     for (const permission of permissions) {
-      if (typeof permission === 'string') {
+      if (typeof permission === "string") {
         if (!this.SUPPORTED_PERMISSIONS.includes(permission)) {
           warnings.push(`Permission '${permission}' is not fully supported in Flow Browser`);
-          
+
           // 尝试映射权限
           const mapped = this.PERMISSION_MAPPINGS[permission as keyof typeof this.PERMISSION_MAPPINGS];
           if (mapped) {
             mappedPermissions.push(...mapped);
-            warnings.push(`Permission '${permission}' mapped to: ${mapped.join(', ')}`);
+            warnings.push(`Permission '${permission}' mapped to: ${mapped.join(", ")}`);
           }
         } else {
           mappedPermissions.push(permission);
@@ -101,7 +101,7 @@ export class ExtensionPermissionManager {
 
     // 检查host permissions
     for (const hostPermission of hostPermissions) {
-      if (typeof hostPermission === 'string') {
+      if (typeof hostPermission === "string") {
         // 验证host permission格式
         if (!this.isValidHostPermission(hostPermission)) {
           errors.push(`Invalid host permission: ${hostPermission}`);
@@ -132,7 +132,7 @@ export class ExtensionPermissionManager {
       /^chrome-extension:\/\/\*$/
     ];
 
-    return validPatterns.some(pattern => pattern.test(hostPermission));
+    return validPatterns.some((pattern) => pattern.test(hostPermission));
   }
 
   /**
@@ -153,11 +153,10 @@ export class ExtensionPermissionManager {
   public static needsSpecialHandling(extension: Extension): boolean {
     const manifest = extension.manifest;
     const permissions = manifest.permissions || [];
-    
+
     // 检查是否有不支持的权限
-    return permissions.some(permission => 
-      typeof permission === 'string' && 
-      !this.SUPPORTED_PERMISSIONS.includes(permission)
+    return permissions.some(
+      (permission) => typeof permission === "string" && !this.SUPPORTED_PERMISSIONS.includes(permission)
     );
   }
 
@@ -169,14 +168,13 @@ export class ExtensionPermissionManager {
   public static getCompatibilityScore(extension: Extension): number {
     const manifest = extension.manifest;
     const permissions = manifest.permissions || [];
-    
+
     if (permissions.length === 0) {
       return 100; // 没有权限要求，完全兼容
     }
 
-    const supportedCount = permissions.filter(permission => 
-      typeof permission === 'string' && 
-      this.SUPPORTED_PERMISSIONS.includes(permission)
+    const supportedCount = permissions.filter(
+      (permission) => typeof permission === "string" && this.SUPPORTED_PERMISSIONS.includes(permission)
     ).length;
 
     const totalCount = permissions.length;
@@ -197,24 +195,24 @@ export class ExtensionPermissionManager {
   } {
     const manifest = extension.manifest;
     const permissions = manifest.permissions || [];
-    
+
     const supportedPermissions: string[] = [];
     const unsupportedPermissions: string[] = [];
     const warnings: string[] = [];
     const recommendations: string[] = [];
 
     for (const permission of permissions) {
-      if (typeof permission === 'string') {
+      if (typeof permission === "string") {
         if (this.SUPPORTED_PERMISSIONS.includes(permission)) {
           supportedPermissions.push(permission);
         } else {
           unsupportedPermissions.push(permission);
           warnings.push(`Permission '${permission}' is not supported`);
-          
+
           // 提供建议
           const mapped = this.PERMISSION_MAPPINGS[permission as keyof typeof this.PERMISSION_MAPPINGS];
           if (mapped) {
-            recommendations.push(`Consider using ${mapped.join(' or ')} instead of ${permission}`);
+            recommendations.push(`Consider using ${mapped.join(" or ")} instead of ${permission}`);
           }
         }
       }

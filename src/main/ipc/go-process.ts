@@ -26,7 +26,7 @@ export function setupGoProcessIPC() {
   ipcMain.handle("go-process:status", () => {
     return {
       isRunning: goProcessManager.isRunning(),
-      processId: goProcessManager.getProcessId(),
+      processId: goProcessManager.getProcessId()
     };
   });
 

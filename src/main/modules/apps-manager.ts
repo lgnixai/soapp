@@ -15,7 +15,7 @@ export class AppsManager {
 
   constructor() {
     debugPrint("APPS_MANAGER", "AppsManager constructor called");
-    
+
     // 监听应用退出事件
     app.on("before-quit", () => {
       debugPrint("APPS_MANAGER", "before-quit event received");
@@ -49,7 +49,7 @@ export class AppsManager {
    */
   async initialize(): Promise<void> {
     debugPrint("APPS_MANAGER", "initializing apps manager");
-    
+
     try {
       await this.loadConfig();
       await this.startEnabledApps();
@@ -132,8 +132,8 @@ export class AppsManager {
       return;
     }
 
-    const enabledApps = Object.entries(this.config.apps).filter(([_, appConfig]) => 
-      appConfig.enabled && appConfig.autostart
+    const enabledApps = Object.entries(this.config.apps).filter(
+      ([_, appConfig]) => appConfig.enabled && appConfig.autostart
     );
 
     debugPrint("APPS_MANAGER", "starting enabled apps", enabledApps.length);
@@ -193,7 +193,7 @@ export class AppsManager {
         startTime: new Date(),
         restartCount: 0,
         lastHealthCheck: null,
-        healthStatus: 'unknown'
+        healthStatus: "unknown"
       };
       this.appStatuses.set(appId, status);
 
@@ -261,7 +261,12 @@ export class AppsManager {
     if (!this.stoppingApps.has(appId) && !this.isShuttingDown && status && this.config) {
       const appConfig = this.config.apps[appId];
       const abnormalExit = !(code === 0 || signal === "SIGTERM");
-      if (appConfig && appConfig.restartOnFailure && abnormalExit && status.restartCount < appConfig.maxRestartAttempts) {
+      if (
+        appConfig &&
+        appConfig.restartOnFailure &&
+        abnormalExit &&
+        status.restartCount < appConfig.maxRestartAttempts
+      ) {
         debugPrint("APPS_MANAGER", `scheduling restart for app ${appId}`);
         setTimeout(() => {
           if (!this.isShuttingDown && !this.stoppingApps.has(appId)) {
@@ -280,7 +285,7 @@ export class AppsManager {
     const status = this.appStatuses.get(appId);
     if (status) {
       status.error = error.message;
-      status.healthStatus = 'unhealthy';
+      status.healthStatus = "unhealthy";
     }
   }
 
@@ -296,20 +301,20 @@ export class AppsManager {
 
       try {
         const response = await fetch(appConfig.healthCheck.url, {
-          method: 'GET',
+          method: "GET",
           signal: AbortSignal.timeout(appConfig.healthCheck.timeout)
         });
 
         const status = this.appStatuses.get(appId);
         if (status) {
           status.lastHealthCheck = new Date();
-          status.healthStatus = response.ok ? 'healthy' : 'unhealthy';
+          status.healthStatus = response.ok ? "healthy" : "unhealthy";
         }
       } catch (error) {
         const status = this.appStatuses.get(appId);
         if (status) {
           status.lastHealthCheck = new Date();
-          status.healthStatus = 'unhealthy';
+          status.healthStatus = "unhealthy";
         }
       }
     }, appConfig.healthCheck.interval);
@@ -399,9 +404,7 @@ export class AppsManager {
     this.isShuttingDown = true;
     debugPrint("APPS_MANAGER", "shutting down apps manager");
 
-    const stopPromises = Array.from(this.appProcesses.keys()).map(appId => 
-      this.stopApp(appId)
-    );
+    const stopPromises = Array.from(this.appProcesses.keys()).map((appId) => this.stopApp(appId));
 
     await Promise.all(stopPromises);
   }

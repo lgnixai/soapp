@@ -152,11 +152,14 @@ function initializeApp() {
   debugPrint("INITIALIZATION", "browser object created");
 
   // Initialize apps manager
-  appsManager.initialize().then(() => {
-    debugPrint("INITIALIZATION", "apps manager initialized successfully");
-  }).catch((error) => {
-    debugPrint("INITIALIZATION", "failed to initialize apps manager", error);
-  });
+  appsManager
+    .initialize()
+    .then(() => {
+      debugPrint("INITIALIZATION", "apps manager initialized successfully");
+    })
+    .catch((error) => {
+      debugPrint("INITIALIZATION", "failed to initialize apps manager", error);
+    });
 
   // Handle command line arguments
   const commandLine = process.argv.slice(1);

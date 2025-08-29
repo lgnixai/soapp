@@ -89,20 +89,23 @@ export default function AppsManagerTestPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'healthy': return 'bg-green-100 text-green-800';
-      case 'unhealthy': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case "healthy":
+        return "bg-green-100 text-green-800";
+      case "unhealthy":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
   const getRunningColor = (isRunning: boolean) => {
-    return isRunning ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+    return isRunning ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800";
   };
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <h1 className="text-2xl font-bold mb-6">应用程序管理器测试</h1>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* 应用程序状态 */}
         <div className="bg-white p-6 rounded-lg shadow">
@@ -117,26 +120,24 @@ export default function AppsManagerTestPage() {
                   </div>
                   <div className="flex space-x-2">
                     <span className={`px-2 py-1 rounded text-xs ${getRunningColor(status.isRunning)}`}>
-                      {status.isRunning ? '运行中' : '已停止'}
+                      {status.isRunning ? "运行中" : "已停止"}
                     </span>
                     <span className={`px-2 py-1 rounded text-xs ${getStatusColor(status.healthStatus)}`}>
                       {status.healthStatus}
                     </span>
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-2 text-sm text-gray-600 mb-3">
-                  <div>PID: {status.pid || '无'}</div>
+                  <div>PID: {status.pid || "无"}</div>
                   <div>重启次数: {status.restartCount}</div>
-                  <div>启动时间: {status.startTime ? new Date(status.startTime).toLocaleString() : '无'}</div>
-                  <div>健康检查: {status.lastHealthCheck ? new Date(status.lastHealthCheck).toLocaleString() : '无'}</div>
+                  <div>启动时间: {status.startTime ? new Date(status.startTime).toLocaleString() : "无"}</div>
+                  <div>
+                    健康检查: {status.lastHealthCheck ? new Date(status.lastHealthCheck).toLocaleString() : "无"}
+                  </div>
                 </div>
 
-                {status.error && (
-                  <div className="text-red-600 text-sm mb-3">
-                    错误: {status.error}
-                  </div>
-                )}
+                {status.error && <div className="text-red-600 text-sm mb-3">错误: {status.error}</div>}
 
                 <div className="flex space-x-2">
                   <button
@@ -178,8 +179,8 @@ export default function AppsManagerTestPage() {
                   <div>描述: {config.description}</div>
                   <div>最大并发应用: {config.global.maxConcurrentApps}</div>
                   <div>默认超时: {config.global.defaultTimeout}ms</div>
-                  <div>自动重启: {config.global.autoRestartEnabled ? '启用' : '禁用'}</div>
-                  <div>健康检查: {config.global.healthCheckEnabled ? '启用' : '禁用'}</div>
+                  <div>自动重启: {config.global.autoRestartEnabled ? "启用" : "禁用"}</div>
+                  <div>健康检查: {config.global.healthCheckEnabled ? "启用" : "禁用"}</div>
                 </div>
               </div>
 
@@ -194,11 +195,15 @@ export default function AppsManagerTestPage() {
                           <p className="text-sm text-gray-600">{appConfig.description}</p>
                         </div>
                         <div className="flex space-x-1">
-                          <span className={`px-2 py-1 rounded text-xs ${appConfig.enabled ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                            {appConfig.enabled ? '启用' : '禁用'}
+                          <span
+                            className={`px-2 py-1 rounded text-xs ${appConfig.enabled ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+                          >
+                            {appConfig.enabled ? "启用" : "禁用"}
                           </span>
-                          <span className={`px-2 py-1 rounded text-xs ${appConfig.autostart ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'}`}>
-                            {appConfig.autostart ? '自启动' : '手动'}
+                          <span
+                            className={`px-2 py-1 rounded text-xs ${appConfig.autostart ? "bg-blue-100 text-blue-800" : "bg-gray-100 text-gray-800"}`}
+                          >
+                            {appConfig.autostart ? "自启动" : "手动"}
                           </span>
                         </div>
                       </div>
@@ -235,11 +240,7 @@ export default function AppsManagerTestPage() {
         </button>
       </div>
 
-      {message && (
-        <div className="mt-4 p-3 bg-blue-100 border border-blue-300 rounded text-blue-800">
-          {message}
-        </div>
-      )}
+      {message && <div className="mt-4 p-3 bg-blue-100 border border-blue-300 rounded text-blue-800">{message}</div>}
 
       <div className="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded">
         <h3 className="font-semibold text-yellow-800 mb-2">说明</h3>

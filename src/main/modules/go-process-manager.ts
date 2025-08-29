@@ -9,7 +9,7 @@ export class GoProcessManager {
 
   constructor() {
     debugPrint("GO_PROCESS", "GoProcessManager constructor called");
-    
+
     // 监听应用退出事件
     app.on("before-quit", () => {
       debugPrint("GO_PROCESS", "before-quit event received");
@@ -43,7 +43,7 @@ export class GoProcessManager {
    */
   async startYarr(): Promise<void> {
     debugPrint("GO_PROCESS", "startYarr called");
-    
+
     if (this.yarrProcess) {
       debugPrint("GO_PROCESS", "yarr process already running");
       return;
@@ -52,13 +52,13 @@ export class GoProcessManager {
     try {
       // 获取yarr可执行文件的路径
       const yarrPath = this.getYarrPath();
-      
+
       debugPrint("GO_PROCESS", "starting yarr process", yarrPath);
 
       // 启动yarr进程
       this.yarrProcess = spawn(yarrPath, [], {
         stdio: ["pipe", "pipe", "pipe"],
-        detached: false, // 设置为false，这样父进程退出时子进程也会退出
+        detached: false // 设置为false，这样父进程退出时子进程也会退出
       });
 
       // 监听进程输出

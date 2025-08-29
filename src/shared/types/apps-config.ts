@@ -25,7 +25,7 @@ export interface AppHealthCheck {
 
 export interface AppLogging {
   enabled: boolean;
-  level: 'debug' | 'info' | 'warn' | 'error';
+  level: "debug" | "info" | "warn" | "error";
   file: string;
 }
 
@@ -33,7 +33,7 @@ export interface AppConfig {
   name: string;
   description: string;
   enabled: boolean;
-  type: 'executable' | 'script' | 'service';
+  type: "executable" | "script" | "service";
   executable: AppExecutable;
   web: AppWeb;
   icon: AppIcon;
@@ -69,6 +69,6 @@ export interface AppStatus {
   startTime: Date | null;
   restartCount: number;
   lastHealthCheck: Date | null;
-  healthStatus: 'healthy' | 'unhealthy' | 'unknown';
+  healthStatus: "healthy" | "unhealthy" | "unknown";
   error?: string;
 }

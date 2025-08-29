@@ -176,10 +176,15 @@ export default function AppsManagerPage() {
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">应用程序管理器</h1>
         <div className="flex gap-2">
-          <Button onClick={startSelected} disabled={loading || selectedIds.size === 0}>Start Select</Button>
-          <Button onClick={stopSelected} variant="outline" disabled={loading || selectedIds.size === 0}>Stop Select</Button>
+          <Button onClick={startSelected} disabled={loading || selectedIds.size === 0}>
+            Start Select
+          </Button>
+          <Button onClick={stopSelected} variant="outline" disabled={loading || selectedIds.size === 0}>
+            Stop Select
+          </Button>
           <Button onClick={reloadConfig} variant="outline" disabled={loading}>
-            <RefreshCw className="w-4 h-4 mr-2" />Reload
+            <RefreshCw className="w-4 h-4 mr-2" />
+            Reload
           </Button>
         </div>
       </div>
@@ -188,7 +193,9 @@ export default function AppsManagerPage() {
         <table className="min-w-full text-sm">
           <thead className="bg-gray-50 dark:bg-slate-900/40">
             <tr>
-              <th className="px-3 py-2 text-left"><input type="checkbox" checked={allSelected} onChange={(e)=>toggleSelectAll(e.target.checked)} /></th>
+              <th className="px-3 py-2 text-left">
+                <input type="checkbox" checked={allSelected} onChange={(e) => toggleSelectAll(e.target.checked)} />
+              </th>
               <th className="px-3 py-2 text-left">Program</th>
               <th className="px-3 py-2 text-left">State</th>
               <th className="px-3 py-2 text-left">Description</th>
@@ -198,7 +205,13 @@ export default function AppsManagerPage() {
           <tbody>
             {appStatuses.map((s) => (
               <tr key={s.id} className="border-t">
-                <td className="px-3 py-2"><input type="checkbox" checked={selectedIds.has(s.id)} onChange={(e)=>toggleSelect(s.id, e.target.checked)} /></td>
+                <td className="px-3 py-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedIds.has(s.id)}
+                    onChange={(e) => toggleSelect(s.id, e.target.checked)}
+                  />
+                </td>
                 <td className="px-3 py-2">{s.name || s.id}</td>
                 <td className="px-3 py-2">
                   <Badge className={getRunningColor(s.isRunning)}>{s.isRunning ? "RUNNING" : "STOPPED"}</Badge>
@@ -207,14 +220,24 @@ export default function AppsManagerPage() {
                   {s.isRunning ? `pid ${s.pid ?? "-"}, uptime ${formatUptime(s.startTime)}` : "-"}
                 </td>
                 <td className="px-3 py-2 flex gap-2">
-                  <Button size="sm" disabled={loading || s.isRunning} onClick={()=>startApp(s.id)}>Start</Button>
-                  <Button size="sm" variant="outline" disabled={loading || !s.isRunning} onClick={()=>stopApp(s.id)}>Stop</Button>
-                  <Button size="sm" variant="ghost" onClick={()=>restartApp(s.id)} title="Restart"><RotateCcw className="w-4 h-4" /></Button>
+                  <Button size="sm" disabled={loading || s.isRunning} onClick={() => startApp(s.id)}>
+                    Start
+                  </Button>
+                  <Button size="sm" variant="outline" disabled={loading || !s.isRunning} onClick={() => stopApp(s.id)}>
+                    Stop
+                  </Button>
+                  <Button size="sm" variant="ghost" onClick={() => restartApp(s.id)} title="Restart">
+                    <RotateCcw className="w-4 h-4" />
+                  </Button>
                 </td>
               </tr>
             ))}
             {appStatuses.length === 0 && (
-              <tr><td className="px-3 py-6 text-center text-gray-500" colSpan={5}>暂无应用</td></tr>
+              <tr>
+                <td className="px-3 py-6 text-center text-gray-500" colSpan={5}>
+                  暂无应用
+                </td>
+              </tr>
             )}
           </tbody>
         </table>
@@ -243,7 +266,9 @@ export default function AppsManagerPage() {
                 <div>健康状态：{status.healthStatus}</div>
                 <div>启动时间：{status.startTime ? new Date(status.startTime).toLocaleString() : "无"}</div>
                 <div>重启次数：{status.restartCount}</div>
-                <div>最后健康检查：{status.lastHealthCheck ? new Date(status.lastHealthCheck).toLocaleString() : "无"}</div>
+                <div>
+                  最后健康检查：{status.lastHealthCheck ? new Date(status.lastHealthCheck).toLocaleString() : "无"}
+                </div>
                 {status.error && <div className="text-red-600">错误：{status.error}</div>}
               </CardContent>
             </Card>

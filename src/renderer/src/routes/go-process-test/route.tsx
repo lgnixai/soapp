@@ -8,7 +8,7 @@ interface GoProcessStatus {
 export default function GoProcessTestPage() {
   const [status, setStatus] = useState<GoProcessStatus>({
     isRunning: false,
-    processId: null,
+    processId: null
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -86,25 +86,23 @@ export default function GoProcessTestPage() {
   return (
     <div className="p-6 max-w-2xl mx-auto">
       <h1 className="text-2xl font-bold mb-6">Go进程管理测试</h1>
-      
+
       <div className="bg-gray-100 p-4 rounded-lg mb-6">
         <h2 className="text-lg font-semibold mb-2">进程状态</h2>
         <div className="space-y-2">
           <div className="flex items-center">
             <span className="font-medium">运行状态:</span>
-            <span className={`ml-2 px-2 py-1 rounded text-sm ${
-              status.isRunning 
-                ? "bg-green-100 text-green-800" 
-                : "bg-red-100 text-red-800"
-            }`}>
+            <span
+              className={`ml-2 px-2 py-1 rounded text-sm ${
+                status.isRunning ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+              }`}
+            >
               {status.isRunning ? "运行中" : "已停止"}
             </span>
           </div>
           <div className="flex items-center">
             <span className="font-medium">进程ID:</span>
-            <span className="ml-2 text-gray-600">
-              {status.processId || "无"}
-            </span>
+            <span className="ml-2 text-gray-600">{status.processId || "无"}</span>
           </div>
         </div>
       </div>
@@ -118,7 +116,7 @@ export default function GoProcessTestPage() {
           >
             {loading ? "启动中..." : "启动进程"}
           </button>
-          
+
           <button
             onClick={stopProcess}
             disabled={loading || !status.isRunning}
@@ -126,7 +124,7 @@ export default function GoProcessTestPage() {
           >
             {loading ? "停止中..." : "停止进程"}
           </button>
-          
+
           <button
             onClick={restartProcess}
             disabled={loading}
@@ -134,7 +132,7 @@ export default function GoProcessTestPage() {
           >
             {loading ? "重启中..." : "重启进程"}
           </button>
-          
+
           <button
             onClick={checkStatus}
             disabled={loading}
@@ -144,11 +142,7 @@ export default function GoProcessTestPage() {
           </button>
         </div>
 
-        {message && (
-          <div className="p-3 bg-blue-100 border border-blue-300 rounded text-blue-800">
-            {message}
-          </div>
-        )}
+        {message && <div className="p-3 bg-blue-100 border border-blue-300 rounded text-blue-800">{message}</div>}
       </div>
 
       <div className="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded">

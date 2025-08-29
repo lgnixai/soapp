@@ -511,6 +511,12 @@ const windowsAPI: FlowWindowsAPI = {
   },
   closeSettingsWindow: () => {
     return ipcRenderer.send("settings:close");
+  },
+  openAppsManagerWindow: () => {
+    return ipcRenderer.send("apps-manager:open");
+  },
+  closeAppsManagerWindow: () => {
+    return ipcRenderer.send("apps-manager:close");
   }
 };
 
@@ -637,6 +643,9 @@ const flowAPI: typeof flow = {
 const electronAPI = {
   showOpenDialog: async (options: any) => {
     return ipcRenderer.invoke("electron:show-open-dialog", options);
+  },
+  invoke: async (channel: string, ...args: any[]) => {
+    return ipcRenderer.invoke(channel, ...args);
   }
 };
 

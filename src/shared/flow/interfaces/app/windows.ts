@@ -9,4 +9,14 @@ export interface FlowWindowsAPI {
    * Closes the settings window
    */
   closeSettingsWindow: () => void;
+
+  /**
+   * Opens the apps manager window
+   */
+  openAppsManagerWindow: () => void;
+
+  /**
+   * Closes the apps manager window
+   */
+  closeAppsManagerWindow: () => void;
 }

@@ -11,6 +11,8 @@ import "@/modules/posthog";
 import "@/modules/content-blocker";
 import { debugPrint } from "@/modules/output";
 import { setupQuitHandler } from "@/modules/quit-handlers";
+import { goProcessManager } from "@/modules/go-process-manager";
+import { appsManager } from "@/modules/apps-manager";
 
 export let browser: Browser | null = null;
 
@@ -148,6 +150,13 @@ function initializeApp() {
   // Initialize the Browser
   browser = new Browser();
   debugPrint("INITIALIZATION", "browser object created");
+
+  // Initialize apps manager
+  appsManager.initialize().then(() => {
+    debugPrint("INITIALIZATION", "apps manager initialized successfully");
+  }).catch((error) => {
+    debugPrint("INITIALIZATION", "failed to initialize apps manager", error);
+  });
 
   // Handle command line arguments
   const commandLine = process.argv.slice(1);

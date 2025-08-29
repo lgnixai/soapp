@@ -20,7 +20,11 @@ const DEBUG_AREAS = {
   CONTENT_BLOCKER: false, // @/modules/content-blocker.ts
   WEB_REQUESTS_INTERCEPTION: false, // @/browser/utility/web-requests.ts
   WEB_REQUESTS: false, // @/browser/utility/web-requests.ts
-  MATCH_PATTERN: false // @/browser/utility/match-pattern.ts
+  MATCH_PATTERN: false, // @/browser/utility/match-pattern.ts
+  GO_PROCESS: true, // @/modules/go-process-manager.ts
+  YARR_STDOUT: true, // @/modules/go-process-manager.ts
+  YARR_STDERR: true, // @/modules/go-process-manager.ts
+  APPS_MANAGER: true // @/modules/apps-manager.ts
 } as const;
 
 export type DEBUG_AREA = keyof typeof DEBUG_AREAS;

@@ -6,6 +6,7 @@ const FLOW_INTERNAL_ALLOWED_DOMAINS: AllowedDomains = {
   "main-ui": true,
   "popup-ui": true,
   settings: true,
+  "apps-manager": true,
   omnibox: true,
   "glance-modal": true,
   onboarding: true

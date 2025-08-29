@@ -1,0 +1,36 @@
+{
+  "name": "Example App",
+  "description": "Describe what this app does",
+  "enabled": true,
+  "type": "executable",
+  "executable": {
+    "path": "main/example-binary",
+    "args": [],
+    "env": {}
+  },
+  "web": {
+    "port": 8080,
+    "host": "127.0.0.1",
+    "url": "http://127.0.0.1:8080",
+    "openInBrowser": false
+  },
+  "icon": {
+    "path": "example/icon.png",
+    "fallback": "default-app-icon.png"
+  },
+  "autostart": false,
+  "restartOnFailure": true,
+  "maxRestartAttempts": 3,
+  "restartDelay": 5000,
+  "healthCheck": {
+    "enabled": false,
+    "url": "http://127.0.0.1:8080/health",
+    "interval": 30000,
+    "timeout": 5000
+  },
+  "logging": {
+    "enabled": true,
+    "level": "info",
+    "file": "logs/example-app.log"
+  }
+}

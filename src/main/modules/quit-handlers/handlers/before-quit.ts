@@ -1,5 +1,7 @@
 import { loadedProfileSessions } from "@/browser/profile-manager";
 import { sleep } from "@/modules/utils";
+import { goProcessManager } from "@/modules/go-process-manager";
+import { appsManager } from "@/modules/apps-manager";
 
 async function flushSessionsData() {
   const promises: Promise<void>[] = [];
@@ -21,6 +23,18 @@ async function flushSessionsData() {
   return true;
 }
 
+async function stopApps() {
+  try {
+    console.log("Stopping apps...");
+    await appsManager.shutdown();
+    console.log("Apps stopped successfully");
+    return true;
+  } catch (error) {
+    console.error("Failed to stop apps:", error);
+    return false;
+  }
+}
+
 // Insert Logic here to handle before the app quits
 // If the handler returns true, the app will quit normally
 // If the handler returns false, the quit will be cancelled
@@ -29,7 +43,11 @@ export function beforeQuit(): boolean | Promise<boolean> {
     .then(() => true)
     .catch(() => true);
 
-  return Promise.all([flushSessionsDataPromise]).then((results) => {
+  const stopAppsPromise = stopApps()
+    .then(() => true)
+    .catch(() => true);
+
+  return Promise.all([flushSessionsDataPromise, stopAppsPromise]).then((results) => {
     return results.every((result) => result);
   });
 }

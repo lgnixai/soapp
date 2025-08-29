@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/resizable-sidebar";
 import { NavigationEntry } from "~/flow/interfaces/browser/navigation";
 import { cn } from "@/lib/utils";
-import { SidebarCloseIcon, SidebarOpenIcon, XIcon } from "lucide-react";
+import { SidebarCloseIcon, SidebarOpenIcon, XIcon, Settings } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { ComponentProps, useCallback, useEffect, useRef, useState } from "react";
 import { TabData } from "~/types/tabs";
@@ -165,6 +165,11 @@ export function NavigationControls({
     flow.navigation.reloadTab(focusedTab.id);
   };
 
+  const handleAppsManager = () => {
+    // 打开Apps管理弹窗
+    flow.windows.openAppsManagerWindow();
+  };
+
   const SidebarIcon = variant === "floating" && open ? SidebarOpenIcon : SidebarCloseIcon;
 
   return (
@@ -176,6 +181,14 @@ export function NavigationControls({
             icon={<SidebarIcon className="w-4 h-4" />}
             onClick={closeSidebar}
             className={SIDEBAR_HOVER_COLOR}
+          />
+
+          {/* Apps Manager Button */}
+          <SidebarActionButton
+            icon={<Settings className="w-4 h-4" />}
+            onClick={handleAppsManager}
+            className={SIDEBAR_HOVER_COLOR}
+            title="Apps Manager"
           />
 
           {/* Browser Actions */}

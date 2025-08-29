@@ -19,13 +19,19 @@ import "@/ipc/session/spaces";
 
 // Settings APIs
 import "@/ipc/window/settings";
+import "@/ipc/window/apps-manager";
 import "@/ipc/app/icons";
 import "@/ipc/app/open-external";
 import "@/ipc/app/onboarding";
 
 // Special
 import "@/ipc/listeners-manager";
+import "@/ipc/go-process";
+import { setupAppsManagerIPC } from "@/ipc/apps-manager";
 import { ipcMain } from "electron";
+
+// Setup Apps Manager IPC
+setupAppsManagerIPC();
 
 // Add file dialog handler
 ipcMain.handle("electron:show-open-dialog", async (_event, options) => {

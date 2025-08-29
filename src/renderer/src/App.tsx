@@ -23,6 +23,7 @@ import OmniboxDebugRoute from "./routes/omnibox-debug/route";
 import OnboardingRoute from "./routes/onboarding/route";
 import ExtensionsRoute from "./routes/extensions/route";
 import PDFViewerRoute from "./routes/pdf-viewer/route";
+import AppsManagerRoute from "./routes/apps-manager/route";
 
 // Routes //
 function Routes() {
@@ -39,6 +40,9 @@ function Routes() {
       </Route>
       <Route protocol={flowInternalProtocol} hostname="settings">
         <SettingsRoute />
+      </Route>
+      <Route protocol={flowInternalProtocol} hostname="apps-manager">
+        <AppsManagerRoute />
       </Route>
       <Route protocol={flowProtocol} hostname="error">
         <ErrorRoute />

@@ -1,0 +1,39 @@
+{
+  "name": "Yarr RSS Reader",
+  "description": "A self-hosted RSS reader and aggregator",
+  "enabled": true,
+  "type": "executable",
+  "executable": {
+    "path": "yarr/yarr",
+    "args": [],
+    "env": {
+      "YARR_ADDR": "127.0.0.1:7070",
+      "YARR_BASE": "/yarr"
+    }
+  },
+  "web": {
+    "port": 7070,
+    "host": "127.0.0.1",
+    "url": "http://127.0.0.1:7070",
+    "openInBrowser": false
+  },
+  "icon": {
+    "path": "yarr/icon.png",
+    "fallback": "default-app-icon.png"
+  },
+  "autostart": true,
+  "restartOnFailure": true,
+  "maxRestartAttempts": 3,
+  "restartDelay": 5000,
+  "healthCheck": {
+    "enabled": true,
+    "url": "http://127.0.0.1:7070/health",
+    "interval": 30000,
+    "timeout": 5000
+  },
+  "logging": {
+    "enabled": true,
+    "level": "info",
+    "file": "logs/yarr.log"
+  }
+}

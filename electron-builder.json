@@ -15,6 +15,13 @@
     "!{.env,.env.*,.npmrc,bun.lock}",
     "!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}"
   ],
+  "extraResources": [
+    {
+      "from": "apps",
+      "to": "apps",
+      "filter": ["**/*"]
+    }
+  ],
   "protocols": [
     {
       "name": "HyperText Transfer Protocol",
